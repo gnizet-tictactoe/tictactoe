@@ -1,8 +1,46 @@
-<div class="grid">
-    @for (row of rowIndices; track row) {
-    @for (col of colIndices; track col)
-    {
-    <cell [value]="grid()[row][col]" [row]="row" [col]="col"></cell>
+<div class="grid-wrapper">
+    <div class="grid">
+        @for (row of rowIndices; track row) {
+        @for (col of colIndices; track col) {
+        <cell [value]="grid()[row][col]" [row]="row" [col]="col"></cell>
+        }
+        }
+    </div>
+
+    <!-- Vertical bars -->
+    <div class="bar vertical" style="left: calc(33.33% - var(--grid-size) * 0.015)"></div>
+    <div class="bar vertical" style="left: calc(66.66% - var(--grid-size) * 0.015)"></div>
+
+    <!-- Horizontal bars -->
+    <div class="bar horizontal" style="top: calc(33.33% - var(--grid-size) * 0.015)"></div>
+    <div class="bar horizontal" style="top: calc(66.66% - var(--grid-size) * 0.015)"></div>
+
+
+    <!-- Victory bars -->
+
+    <!-- Vertical -->
+    @if (gameVictoryDetails().orientation === 'vertical') {
+    <div class="bar victory vertical"
+        [style.left]="'calc(' + ((gameVictoryDetails().index + 1) / 3) * 100 + '% - var(--grid-size) * (1/6 + 0.0075))'">
+    </div>
     }
+
+    <!-- Horizontal -->
+    @if (gameVictoryDetails().orientation === 'horizontal') {
+    <div class="bar victory horizontal"
+        [style.top]="'calc(' + ((gameVictoryDetails().index + 1) / 3) * 100 + '% - var(--grid-size) * 1/6)'">
+    </div>
+    }
+
+    <!-- Main diagonal -->
+    @if (gameVictoryDetails().orientation === 'diagonal' && gameVictoryDetails().index === 0) {
+    <div class="bar victory diagonal main">
+    </div>
+    }
+
+    <!-- Anti diagonal -->
+    @if (gameVictoryDetails().orientation === 'diagonal' && gameVictoryDetails().index === 1) {
+    <div class="bar victory diagonal anti">
+    </div>
     }
 </div>

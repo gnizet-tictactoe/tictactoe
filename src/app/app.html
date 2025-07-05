@@ -1,5 +1,13 @@
-<game-result></game-result>
-<grid></grid>
-<pawn-selection></pawn-selection>
-<play-game-button></play-game-button>
-<score></score>
+<div class="main-page" [class.popup-open]="showPopup()">
+    <grid></grid>
+</div>
+
+
+@if (showPopup()) {
+<div class="popup">
+    <game-result></game-result>
+    <pawn-selection></pawn-selection>
+    <play-game-button></play-game-button>
+    <score></score>
+</div>
+}

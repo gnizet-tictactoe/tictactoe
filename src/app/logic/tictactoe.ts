@@ -18,11 +18,18 @@ export class TicTacToe {
     gameStatus = signal<string>('');
     gameScore = signal<{ human: number, computer: number, draw: number }>({ human: 0, computer: 0, draw: 0 });
 
+    // Game victory details to highlight the winning cells
+    // Orientation can be 'horizontal', 'vertical', or 'diagonal'
+    // Index indicates which row, column, or diagonal won (diagonal 0 is the main diagonal, diagonal 1 is the anti-diagonal)
+    gameVictoryDetails = signal<{ orientation: string, index: number }>({ orientation: '', index: -1 });
+
     // Current player's turn
     currentPlayer = 'human' as PlayerType;
 
     // Value of each cell in the grid
     grid = signal<CellValue[][]>([]);
+
+    showPopup = signal<boolean>(true);
 
     initGame() {
 
@@ -34,12 +41,14 @@ export class TicTacToe {
 
         // Reset game state
         this.filledCells = 0;
+        this.gameVictoryDetails.set({ orientation: '', index: -1 }); // Reset game victory details
         this.currentPlayer = 'human'; // TODO: change based on pawn selection (x starts first)
     }
 
     playGame() {
         this.initGame();
         this.gameStatus.set('running');
+        this.showPopup.set(false);
     }
 
     handleCellClick(row: number, col: number): void {
@@ -56,6 +65,7 @@ export class TicTacToe {
     }
 
     handleComputerMove(): void {
+        console.log('Computer is making a move...');
         if (this.currentPlayer === 'computer') {
 
             // Track the empty cells
@@ -72,12 +82,17 @@ export class TicTacToe {
             // Select a random empty cell for the computer's move
             const randomEmptyCell = Math.floor(Math.random() * emptyCells.length);
 
-            // Fill the selected cell with the computer's pawn type
-            this.grid.update(grid => {
-                grid[emptyCells[randomEmptyCell].row][emptyCells[randomEmptyCell].col] = this.pawnChoices['computer'];
-                this.nextTurn();
-                return grid;
-            });
+            // Deep clone of the grid 
+            const newGrid = this.grid().map(row => [...row]);
+
+            // Fill the selected cell
+            newGrid[emptyCells[randomEmptyCell].row][emptyCells[randomEmptyCell].col] = this.pawnChoices['computer'];
+
+            // Update the signal with the new grid reference
+            this.grid.set(newGrid);
+
+            // Call nextTurn after updating the state
+            this.nextTurn();
         }
     }
 
@@ -89,7 +104,11 @@ export class TicTacToe {
 
         if (this.currentPlayer === 'human') {
             this.currentPlayer = 'computer';
-            this.handleComputerMove();
+
+            // Add a small delay to simulate thinking time for the computer
+            setTimeout(() => {
+                this.handleComputerMove();
+            }, 300);
         } else {
             this.currentPlayer = 'human';
         }
@@ -102,7 +121,7 @@ export class TicTacToe {
             let candidateCellValue = this.grid()[i][0];
 
             if (candidateCellValue !== 'empty' && this.grid()[i].every(cell => cell === candidateCellValue)) {
-                this.registerGameResult(`${this.currentPlayer}-win`);
+                this.registerGameResult(`${this.currentPlayer}-win`, 'horizontal', i);
                 return true;
             }
         }
@@ -113,7 +132,7 @@ export class TicTacToe {
             let candidateCellValue = this.grid()[0][j];
 
             if (candidateCellValue !== 'empty' && this.grid().every(row => row[j] === candidateCellValue)) {
-                this.registerGameResult(`${this.currentPlayer}-win`);
+                this.registerGameResult(`${this.currentPlayer}-win`, 'vertical', j);
                 return true;
             }
         }
@@ -122,7 +141,7 @@ export class TicTacToe {
         let candidateCellValue = this.grid()[0][0];
 
         if (candidateCellValue !== 'empty' && this.grid().every((row, col) => row[col] === candidateCellValue)) {
-            this.registerGameResult(`${this.currentPlayer}-win`);
+            this.registerGameResult(`${this.currentPlayer}-win`, 'diagonal', 0);
             return true;
         }
 
@@ -130,7 +149,7 @@ export class TicTacToe {
         candidateCellValue = this.grid()[0][this.gridSize - 1];
 
         if (candidateCellValue !== 'empty' && this.grid().every((row, col) => row[this.gridSize - 1 - col] === candidateCellValue)) {
-            this.registerGameResult(`${this.currentPlayer}-win`);
+            this.registerGameResult(`${this.currentPlayer}-win`, 'diagonal', 1);
             return true;
         }
 
@@ -143,7 +162,7 @@ export class TicTacToe {
         return false;
     }
 
-    registerGameResult(result: string): void {
+    registerGameResult(result: string, orientation?: string, index?: number): void {
         if (result === 'human-win') {
             this.gameScore.update(score => ({ ...score, human: score.human + 1 }));
         } else if (result === 'computer-win') {
@@ -152,6 +171,15 @@ export class TicTacToe {
             this.gameScore.update(score => ({ ...score, draw: score.draw + 1 }));
         }
         this.gameStatus.set(result);
+
+        if (orientation && index !== undefined) {
+            this.gameVictoryDetails.set({ orientation, index });
+        } else {
+            this.gameVictoryDetails.set({ orientation: '', index: -1 });
+        }
+
+        // Show the popup with the game result
+        this.showPopup.set(true);
     }
 
     selectPawnType(pawnType: PawnType): void {

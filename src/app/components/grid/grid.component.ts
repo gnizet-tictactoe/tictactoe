@@ -13,7 +13,7 @@ import { TicTacToe } from "../../logic/tictactoe";
 })
 export class GridComponent {
     grid = inject(TicTacToe).grid;
-
+    gameVictoryDetails = inject(TicTacToe).gameVictoryDetails;
 
     // Generate row and column arrays to iterate over in the template
     get rowIndices(): number[] {

@@ -1,10 +1,32 @@
 .cell {
-    background-color: #f0f0f0;
-    border: 2px solid #ccc;
-    padding: 10px;
-    text-align: center;
-    font-size: 16px;
-    color: #181818;
-    width: 100px;
-    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #272727;
+    width: calc(var(--grid-size) / 3);
+    height: calc(var(--grid-size) / 3);
+}
+
+.cell-content {
+    font-family: 'Open Sans', sans-serif;
+    font-size: calc(var(--grid-size) / 5);
+    text-transform: uppercase;
+    font-weight: 700;
+    animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }

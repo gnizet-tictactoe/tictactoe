@@ -14,6 +14,7 @@ import { ScoreComponent } from "./components/score/score.component";
 })
 export class App {
   ticTacToe = inject(TicTacToe);
+  showPopup = this.ticTacToe.showPopup;
 
   constructor() {
     // Initialize the game grid when the app starts
