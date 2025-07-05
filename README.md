@@ -1,59 +1,51 @@
-# Tictactoe
+# Tic Tac Toe – Angular App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.5.
+Simple Tic Tac Toe game built with Angular.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- 3x3 game grid (grid size editable in `src/app/logic/tictactoe.ts`)
+- Player vs Computer logic
+- Computer plays at random
+- Game result display
+
+## Requirements
+
+Make sure you have the following installed:
+
+- [Node.js](https://nodejs.org/)
+- [Angular CLI](https://angular.io/cli)
+
+## Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/gnizet-tictactoe/tictactoe.git
+cd tictactoe
+
+# Install dependencies
+npm install
+```
+
+## Run the app locally
+```bash
+# Start the development server
 ng serve
+
+# Open in your browser
+http://localhost:4200
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+## Project structure
 ```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
+src/
+  app/
+    components/        # Reusable UI components (Grid, cells, buttons, etc.)
+    logic/             # Game logic
+    app.ts             # Root component
+  index.html
+  main.ts
+  styles.css           # Global styles
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

@@ -1,0 +1,9 @@
+<div>
+    @if (gameStatus() === 'human-win') {
+    <h2>Human wins!</h2>
+    } @else if (gameStatus() === 'computer-win') {
+    <h2>Computer wins!</h2>
+    } @else if (gameStatus() === 'draw') {
+    <h2>It's a draw!</h2>
+    }
+</div>

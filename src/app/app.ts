@@ -1,11 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { GridComponent } from './components/grid/grid.component';
+import { TicTacToe } from './logic/tictactoe';
+import { PawnSelectionComponent } from './components/pawn-selection/pawn-selection.component';
+import { GameResultComponent } from "./components/game-result/game-result.component";
+import { PlayGameButtonComponent } from './components/play-game-button/play-game-button';
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [GridComponent, PawnSelectionComponent, GameResultComponent, PlayGameButtonComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
 export class App {
-  protected title = 'tictactoe';
+  ticTacToe = inject(TicTacToe);
+
+  constructor() {
+    // Initialize the game grid when the app starts
+    this.ticTacToe.initGame();
+  }
 }

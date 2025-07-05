@@ -1,0 +1,10 @@
+.cell {
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    font-size: 16px;
+    color: #181818;
+    width: 100px;
+    height: 100px;
+}

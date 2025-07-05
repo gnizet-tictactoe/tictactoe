@@ -1,0 +1,8 @@
+<div class="grid">
+    @for (row of rowIndices; track row) {
+    @for (col of colIndices; track col)
+    {
+    <cell [value]="grid()[row][col]" [row]="row" [col]="col"></cell>
+    }
+    }
+</div>
