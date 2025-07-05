@@ -16,6 +16,7 @@ export class TicTacToe {
     // === GAME STATE ===
     filledCells = 0;
     gameStatus = signal<string>('');
+    gameScore = signal<{ human: number, computer: number, draw: number }>({ human: 0, computer: 0, draw: 0 });
 
     // Current player's turn
     currentPlayer = 'human' as PlayerType;
@@ -101,7 +102,7 @@ export class TicTacToe {
             let candidateCellValue = this.grid()[i][0];
 
             if (candidateCellValue !== 'empty' && this.grid()[i].every(cell => cell === candidateCellValue)) {
-                this.gameStatus.set(`${this.currentPlayer}-win`)
+                this.registerGameResult(`${this.currentPlayer}-win`);
                 return true;
             }
         }
@@ -112,7 +113,7 @@ export class TicTacToe {
             let candidateCellValue = this.grid()[0][j];
 
             if (candidateCellValue !== 'empty' && this.grid().every(row => row[j] === candidateCellValue)) {
-                this.gameStatus.set(`${this.currentPlayer}-win`)
+                this.registerGameResult(`${this.currentPlayer}-win`);
                 return true;
             }
         }
@@ -121,7 +122,7 @@ export class TicTacToe {
         let candidateCellValue = this.grid()[0][0];
 
         if (candidateCellValue !== 'empty' && this.grid().every((row, col) => row[col] === candidateCellValue)) {
-            this.gameStatus.set(`${this.currentPlayer}-win`)
+            this.registerGameResult(`${this.currentPlayer}-win`);
             return true;
         }
 
@@ -129,17 +130,28 @@ export class TicTacToe {
         candidateCellValue = this.grid()[0][this.gridSize - 1];
 
         if (candidateCellValue !== 'empty' && this.grid().every((row, col) => row[this.gridSize - 1 - col] === candidateCellValue)) {
-            this.gameStatus.set(`${this.currentPlayer}-win`)
+            this.registerGameResult(`${this.currentPlayer}-win`);
             return true;
         }
 
         // Check for a draw
         if (this.filledCells === this.gridSize * this.gridSize) {
-            this.gameStatus.set('draw');
+            this.registerGameResult('draw');
             return true;
         }
 
         return false;
+    }
+
+    registerGameResult(result: string): void {
+        if (result === 'human-win') {
+            this.gameScore.update(score => ({ ...score, human: score.human + 1 }));
+        } else if (result === 'computer-win') {
+            this.gameScore.update(score => ({ ...score, computer: score.computer + 1 }));
+        } else if (result === 'draw') {
+            this.gameScore.update(score => ({ ...score, draw: score.draw + 1 }));
+        }
+        this.gameStatus.set(result);
     }
 
     selectPawnType(pawnType: PawnType): void {

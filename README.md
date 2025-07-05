@@ -13,10 +13,12 @@ Simple Tic Tac Toe game built with Angular.
 
 Make sure you have the following installed:
 
-- [Node.js](https://nodejs.org/)
+- [Node.js](https://nodejs.org/) (v20.19+)
 - [Angular CLI](https://angular.io/cli)
 
 ## Installation
+
+If you are running on Windows, make sure to use cmd or bash - not PowerShell
 
 ```bash
 # Clone the repository
@@ -30,7 +32,7 @@ npm install
 ## Run the app locally
 ```bash
 # Start the development server
-ng serve
+npm start
 
 # Open in your browser
 http://localhost:4200
@@ -43,6 +45,7 @@ The app will automatically reload if you change any of the source files.
 src/
   app/
     components/        # Reusable UI components (Grid, cells, buttons, etc.)
+    interface/         # Type interfaces
     logic/             # Game logic
     app.ts             # Root component
   index.html
