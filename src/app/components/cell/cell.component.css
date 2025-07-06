@@ -2,16 +2,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #272727;
     width: calc(var(--grid-size) / 3);
     height: calc(var(--grid-size) / 3);
 }
 
 .cell-content {
-    font-family: 'Open Sans', sans-serif;
-    font-size: calc(var(--grid-size) / 5);
-    text-transform: uppercase;
-    font-weight: 700;
     animation: popIn 0.3s ease;
 }
 

@@ -1,0 +1,9 @@
+.game-result {
+    color: var(--accent-color);
+    font-size: 2rem;
+    font-weight: 200;
+    text-transform: uppercase;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+}

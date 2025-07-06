@@ -1,3 +1,12 @@
-<div>Human : {{ gameScore().human }} </div>
-<div>Computer : {{ gameScore().computer }} </div>
-<div>Draws : {{ gameScore().draw }} </div>
+<div class="score">
+    @for (entry of [
+    { label: 'Human', value: gameScore().human },
+    { label: 'Draws', value: gameScore().draw },
+    { label: 'Computer', value: gameScore().computer }
+    ]; track label) {
+    <div class="single">
+        <div class="single score">{{ entry.value }}</div>
+        <div class="single result">{{ entry.label }}</div>
+    </div>
+    }
+</div>

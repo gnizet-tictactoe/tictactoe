@@ -15,9 +15,9 @@
 
 .bar {
     position: absolute;
-    background-color: #272727;
+    background-color: var(--accent-color);
     border-radius: calc(var(--grid-size) * 0.04);
-    /* z-index: 10; */
+    transition: background-color 0.3s ease;
 }
 
 .bar.vertical {
@@ -57,13 +57,13 @@
 }
 
 .bar.victory {
-    background-color: rgb(119, 0, 0);
+    background-color: #27ae60;
 }
 
 .bar.victory.vertical {
     top: 5%;
     bottom: 0px;
-    width: calc(var(--grid-size) * 0.015);
+    width: calc(var(--grid-size) * 0.03);
     transform-origin: top;
     transform: scaleY(0);
     animation: grow-victory-vertical 0.4s ease-in forwards;
@@ -83,7 +83,7 @@
 .bar.victory.horizontal {
     left: 5%;
     right: 0px;
-    height: calc(var(--grid-size) * 0.015);
+    height: calc(var(--grid-size) * 0.03);
     transform-origin: left;
     transform: scaleX(0);
     animation: grow-victory-horizontal 0.4s ease-in forwards;
@@ -105,7 +105,7 @@
     top: 5%;
     right: 0px;
     bottom: 0px;
-    height: calc(var(--grid-size) * 0.015);
+    height: calc(var(--grid-size) * 0.03);
     transform-origin: left;
     transform: scaleX(0);
     animation: grow-victory-diagonal-main 0.4s ease-in forwards;
@@ -130,7 +130,7 @@
     top: 95%;
     right: 0px;
     bottom: 0px;
-    height: calc(var(--grid-size) * 0.015);
+    height: calc(var(--grid-size) * 0.03);
     transform-origin: left;
     transform: scaleX(0);
     animation: grow-victory-diagonal-anti 0.4s ease-in forwards;

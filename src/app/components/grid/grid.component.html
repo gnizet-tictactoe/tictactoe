@@ -21,14 +21,14 @@
     <!-- Vertical -->
     @if (gameVictoryDetails().orientation === 'vertical') {
     <div class="bar victory vertical"
-        [style.left]="'calc(' + ((gameVictoryDetails().index + 1) / 3) * 100 + '% - var(--grid-size) * (1/6 + 0.0075))'">
+        [style.left]="'calc(' + ((gameVictoryDetails().index + 1) / 3) * 100 + '% - var(--grid-size) * (1/6 + 0.015))'">
     </div>
     }
 
     <!-- Horizontal -->
     @if (gameVictoryDetails().orientation === 'horizontal') {
     <div class="bar victory horizontal"
-        [style.top]="'calc(' + ((gameVictoryDetails().index + 1) / 3) * 100 + '% - var(--grid-size) * 1/6)'">
+        [style.top]="'calc(' + ((gameVictoryDetails().index + 1) / 3) * 100 + '% - var(--grid-size) * (1/6 + 0.01))'">
     </div>
     }
 

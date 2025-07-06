@@ -8,4 +8,5 @@ import { TicTacToe } from "../../logic/tictactoe";
 })
 export class ScoreComponent {
     gameScore = inject(TicTacToe).gameScore;
+    label: any;
 }
