@@ -1,4 +1,4 @@
-import { Injectable, signal } from "@angular/core";
+import { computed, Injectable, signal } from "@angular/core";
 import { CellValue } from "../interface/cellValue";
 import { PlayerType } from "../interface/playerType";
 import { PawnType } from "../interface/pawnType";
@@ -9,12 +9,11 @@ import { PawnType } from "../interface/pawnType";
 export class TicTacToe {
 
     // === GAME SETTINGS ===
-    gameSize = 2;
+    gameSize = 3;
     pawnChoices = { 'human': 'x' as PawnType, 'computer': 'o' as PawnType };
 
 
     // === GAME STATE ===
-    filledCells = 0;
     gameStatus = signal<string>('');
     gameScore = signal<{ Human: number, Draws: number, Computer: number }>({ Human: 0, Draws: 0, Computer: 0 });
 
@@ -28,6 +27,17 @@ export class TicTacToe {
 
     // Value of each cell in the grid
     grid = signal<CellValue[][]>([]);
+
+    // Keep track of the # of filled cells
+    filledCells = computed(() => {
+        let count = 0;
+        for (const row of this.grid()) {
+            for (const cell of row) {
+                if (cell !== 'empty') count++;
+            }
+        }
+        return count;
+    });
 
     showPopup = signal<boolean>(true);
 
@@ -46,7 +56,6 @@ export class TicTacToe {
 
         // Reset game state
         this.initGrid();
-        this.filledCells = 0;
         this.gameVictoryDetails.set({ orientation: '', index: -1 }); // Reset game victory details
         this.currentPlayer = this.getStartingPlayer();
         this.gameStatus.set('running');
@@ -63,15 +72,16 @@ export class TicTacToe {
     handleCellClick(row: number, col: number): void {
         if (this.gameStatus() === 'running' && this.currentPlayer === 'human') {
             this.grid.update(grid => {
-                grid[row][col] = this.pawnChoices['human'];
-                return grid;
-            }
-            );
+                // Make a copy of the grid so that signals associated to grid update correctly
+                const newGrid = grid.map(r => [...r]);
+                newGrid[row][col] = this.pawnChoices['human'];
+                return newGrid;
+            });
 
-            this.filledCells++;
             this.checkForGameEnd();
         }
     }
+
 
     performComputerMove(): void {
 
@@ -98,7 +108,6 @@ export class TicTacToe {
         // Update the signal with the new grid reference
         this.grid.set(newGrid);
 
-        this.filledCells++;
         this.checkForGameEnd();
     }
 
@@ -121,12 +130,14 @@ export class TicTacToe {
     }
 
     checkForGameEnd(): void {
+        const grid = this.grid();
+
         // Check rows
         for (let i = 0; i < this.gameSize; i++) {
 
-            let candidateCellValue = this.grid()[i][0];
+            let candidateCellValue = grid[i][0];
 
-            if (candidateCellValue !== 'empty' && this.grid()[i].every(cell => cell === candidateCellValue)) {
+            if (candidateCellValue !== 'empty' && grid[i].every(cell => cell === candidateCellValue)) {
                 this.registerGameResult(`${this.currentPlayer}-win`, 'horizontal', i);
                 return;
             }
@@ -135,9 +146,9 @@ export class TicTacToe {
         // Check columns
         for (let j = 0; j < this.gameSize; j++) {
 
-            let candidateCellValue = this.grid()[0][j];
+            let candidateCellValue = grid[0][j];
 
-            if (candidateCellValue !== 'empty' && this.grid().every(row => row[j] === candidateCellValue)) {
+            if (candidateCellValue !== 'empty' && grid.every(row => row[j] === candidateCellValue)) {
                 this.registerGameResult(`${this.currentPlayer}-win`, 'vertical', j);
                 return;
             }
@@ -146,21 +157,21 @@ export class TicTacToe {
         // Check diagonal
         let candidateCellValue = this.grid()[0][0];
 
-        if (candidateCellValue !== 'empty' && this.grid().every((row, col) => row[col] === candidateCellValue)) {
+        if (candidateCellValue !== 'empty' && grid.every((row, col) => row[col] === candidateCellValue)) {
             this.registerGameResult(`${this.currentPlayer}-win`, 'diagonal', 0);
             return;
         }
 
         // Check anti-diagonal
-        candidateCellValue = this.grid()[0][this.gameSize - 1];
+        candidateCellValue = grid[0][this.gameSize - 1];
 
-        if (candidateCellValue !== 'empty' && this.grid().every((row, col) => row[this.gameSize - 1 - col] === candidateCellValue)) {
+        if (candidateCellValue !== 'empty' && grid.every((row, col) => row[this.gameSize - 1 - col] === candidateCellValue)) {
             this.registerGameResult(`${this.currentPlayer}-win`, 'diagonal', 1);
             return;
         }
 
         // Check for a draw
-        if (this.filledCells === this.gameSize * this.gameSize) {
+        if (this.filledCells() === this.gameSize * this.gameSize) {
             this.registerGameResult('draw');
             return;
         }
@@ -194,7 +205,6 @@ export class TicTacToe {
     }
 
     selectPawnType(pawnType: PawnType): void {
-        // Only allow pawn selection if game is over
         console.log(`Pawn type selected: ${pawnType}`);
         if (this.gameStatus() !== 'running') {
             this.pawnChoices['human'] = pawnType;
