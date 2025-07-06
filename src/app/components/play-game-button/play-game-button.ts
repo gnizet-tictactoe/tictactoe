@@ -12,6 +12,6 @@ export class PlayGameButtonComponent {
     gameStatus = this.ticTacToe.gameStatus;
 
     playGame() {
-        this.ticTacToe.playGame();
+        this.ticTacToe.initGame();
     }
 }

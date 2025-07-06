@@ -22,7 +22,7 @@ export class App {
 
   constructor() {
     // Initialize the game grid when the app starts
-    this.ticTacToe.initGame();
+    this.ticTacToe.initGrid();
 
     // Set theme to light if not set in localStorage already
     this.theme.setTheme(localStorage.getItem('theme') as 'light' | 'dark' || 'light');
