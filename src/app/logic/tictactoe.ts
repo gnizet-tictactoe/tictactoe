@@ -9,7 +9,7 @@ import { PawnType } from "../interface/pawnType";
 export class TicTacToe {
 
     // === GAME SETTINGS ===
-    gridSize = 3;
+    gameSize = 2;
     pawnChoices = { 'human': 'x' as PawnType, 'computer': 'o' as PawnType };
 
 
@@ -36,8 +36,8 @@ export class TicTacToe {
 
     initGrid() {
         // Initialize the grid with 'empty' values for each cell
-        let newGrid = Array.from({ length: this.gridSize }, () =>
-            Array.from({ length: this.gridSize }, () => 'empty' as CellValue)
+        let newGrid = Array.from({ length: this.gameSize }, () =>
+            Array.from({ length: this.gameSize }, () => 'empty' as CellValue)
         );
         this.grid.set(newGrid);
     }
@@ -78,8 +78,8 @@ export class TicTacToe {
         // Track the empty cells
         let emptyCells: { row: number, col: number }[] = [];
 
-        for (let i = 0; i < this.gridSize; i++) {
-            for (let j = 0; j < this.gridSize; j++) {
+        for (let i = 0; i < this.gameSize; i++) {
+            for (let j = 0; j < this.gameSize; j++) {
                 if (this.grid()[i][j] === 'empty') {
                     emptyCells.push({ row: i, col: j });
                 }
@@ -122,7 +122,7 @@ export class TicTacToe {
 
     checkForGameEnd(): void {
         // Check rows
-        for (let i = 0; i < this.gridSize; i++) {
+        for (let i = 0; i < this.gameSize; i++) {
 
             let candidateCellValue = this.grid()[i][0];
 
@@ -133,7 +133,7 @@ export class TicTacToe {
         }
 
         // Check columns
-        for (let j = 0; j < this.gridSize; j++) {
+        for (let j = 0; j < this.gameSize; j++) {
 
             let candidateCellValue = this.grid()[0][j];
 
@@ -152,15 +152,15 @@ export class TicTacToe {
         }
 
         // Check anti-diagonal
-        candidateCellValue = this.grid()[0][this.gridSize - 1];
+        candidateCellValue = this.grid()[0][this.gameSize - 1];
 
-        if (candidateCellValue !== 'empty' && this.grid().every((row, col) => row[this.gridSize - 1 - col] === candidateCellValue)) {
+        if (candidateCellValue !== 'empty' && this.grid().every((row, col) => row[this.gameSize - 1 - col] === candidateCellValue)) {
             this.registerGameResult(`${this.currentPlayer}-win`, 'diagonal', 1);
             return;
         }
 
         // Check for a draw
-        if (this.filledCells === this.gridSize * this.gridSize) {
+        if (this.filledCells === this.gameSize * this.gameSize) {
             this.registerGameResult('draw');
             return;
         }

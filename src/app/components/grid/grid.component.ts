@@ -8,12 +8,14 @@ import { TicTacToe } from "../../logic/tictactoe";
     templateUrl: "./grid.component.html",
     styleUrls: ["./grid.component.css"],
     host: {
-        '[style.--grid-columns]': 'gridTemplateColumns'
+        '[style.--grid-columns]': 'gridTemplateColumns',
+        '[style.--game-size]': 'gameSize'
     }
 })
 export class GridComponent {
     grid = inject(TicTacToe).grid;
     gameVictoryDetails = inject(TicTacToe).gameVictoryDetails;
+    gameSize = inject(TicTacToe).gameSize;
 
     // Generate row and column arrays to iterate over in the template
     get rowIndices(): number[] {
@@ -24,6 +26,12 @@ export class GridComponent {
         return Array.from({ length: this.grid().length }, (_, i) => i);
     }
 
+    get barPositions(): number[] {
+        // Return percentages for all internal grid lines (not borders)
+        return Array.from({ length: this.gameSize - 1 }, (_, i) =>
+            ((i + 1) / this.gameSize) * 100
+        );
+    }
 
     // For CSS
     get gridTemplateColumns() {

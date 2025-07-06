@@ -2,11 +2,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: calc(var(--grid-size) / 3);
-    height: calc(var(--grid-size) / 3);
+    width: calc(var(--grid-size) / var(--game-size));
+    height: calc(var(--grid-size) / var(--game-size));
 }
 
 .cell-content {
+    font-size: calc(var(--grid-size) / var(--game-size) * 0.6);
     animation: popIn 0.3s ease;
 }
 

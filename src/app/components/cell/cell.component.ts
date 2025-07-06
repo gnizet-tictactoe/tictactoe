@@ -6,11 +6,15 @@ import { TicTacToe } from "../../logic/tictactoe";
     selector: "cell",
     templateUrl: "./cell.component.html",
     styleUrls: ["./cell.component.css"],
+    host: {
+        '[style.--game-size]': 'gameSize'
+    }
 })
 
 
 export class CellComponent {
     private ticTacToe = inject(TicTacToe);
+    gameSize = this.ticTacToe.gameSize;
 
     value = input.required<CellValue>();
     row = input.required<number>();
