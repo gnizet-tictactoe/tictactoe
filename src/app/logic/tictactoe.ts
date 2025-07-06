@@ -103,14 +103,11 @@ export class TicTacToe {
     }
 
     nextTurn(): void {
-        this.setNextPlayer();
-
         if (this.currentPlayer === 'human') {
             return;
         }
 
         if (this.currentPlayer === 'computer') {
-
             // Delay the computer's move to simulate thinking time
             setTimeout(() => {
                 this.performComputerMove();
@@ -169,6 +166,7 @@ export class TicTacToe {
         }
 
         // If this code is reached, the game is still running
+        this.setNextPlayer();
         this.nextTurn();
     }
 
