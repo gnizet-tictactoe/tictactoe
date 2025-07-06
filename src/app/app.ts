@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { GridComponent } from './components/grid/grid.component';
 import { TicTacToe } from './logic/tictactoe';
 import { PawnSelectionComponent } from './components/pawn-selection/pawn-selection.component';

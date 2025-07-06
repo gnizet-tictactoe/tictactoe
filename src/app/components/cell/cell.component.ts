@@ -16,11 +16,13 @@ export class CellComponent {
     row = input.required<number>();
     col = input.required<number>();
 
-    onClick() {
-        this.ticTacToe.handleCellClick(this.row(), this.col());
-    }
-
     get emptyCell(): boolean {
         return this.value() === 'empty';
+    }
+
+    onClick() {
+        if (this.emptyCell) {
+            this.ticTacToe.handleCellClick(this.row(), this.col());
+        }
     }
 }

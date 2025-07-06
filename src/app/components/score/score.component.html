@@ -1,12 +1,14 @@
-<div class="score">
-    @for (entry of [
-    { label: 'Human', value: gameScore().human },
-    { label: 'Draws', value: gameScore().draw },
-    { label: 'Computer', value: gameScore().computer }
-    ]; track label) {
-    <div class="single">
-        <div class="single score">{{ entry.value }}</div>
-        <div class="single result">{{ entry.label }}</div>
+<div class="scores">
+    @for (entry of scoreEntries(); track entry.key) {
+    <div class="score-result-pair">
+        <div class="score-slider">
+            <div class="score-slider-container" [class.animate]="animating()[entry.key]"
+                (animationend)="onAnimationEnd(entry.key)">
+                <div class="score">{{ entry.value }}</div>
+                <div class="score">{{ entry.value + 1 }}</div>
+            </div>
+        </div>
+        <div class="result">{{ entry.key }}</div>
     </div>
     }
 </div>

@@ -12,9 +12,8 @@
     transition: background-color 0.3s ease, opacity 0.3s ease 0.7s;
 }
 
-/* .main-page.popup-open {
-    opacity: 0.5;
-} */
+
+/* TODO: popup component */
 
 .tictactoe {
     color: var(--accent-color);
@@ -23,10 +22,6 @@
     transition: color 0.3s ease;
 }
 
-
-
-
-/* TODO: popup component */
 .popup {
     display: flex;
     flex-direction: column;
@@ -42,7 +37,7 @@
     box-shadow: 0 10px 40px rgba(var(--accent-color-rgb), 0.2);
     z-index: 101;
     animation: popupIn 0.4s ease forwards;
-    animation-delay: 0.7s;
+    animation-delay: 1.2s;
     transition: background-color 0.3s ease;
 }
 

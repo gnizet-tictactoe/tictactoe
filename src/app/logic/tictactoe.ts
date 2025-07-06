@@ -16,7 +16,9 @@ export class TicTacToe {
     // === GAME STATE ===
     filledCells = 0;
     gameStatus = signal<string>('');
-    gameScore = signal<{ human: number, computer: number, draw: number }>({ human: 0, computer: 0, draw: 0 });
+    gameScore = signal<{ Human: number, Draws: number, Computer: number }>({ Human: 0, Draws: 0, Computer: 0 });
+
+    // gameScores = signal<[{ label : "Human", score: 42 }, { label: "Draws", score: 74 }, { label: "Computer", score: 18 }]>;
 
     // Game victory details to highlight the winning cells
     // Orientation can be 'horizontal', 'vertical', or 'diagonal'
@@ -30,6 +32,9 @@ export class TicTacToe {
     grid = signal<CellValue[][]>([]);
 
     showPopup = signal<boolean>(true);
+
+    // This signal is used for triggering animations in the score component
+    scoreChanged = signal<string | null>(null);
 
     initGame() {
 
@@ -54,10 +59,9 @@ export class TicTacToe {
     handleCellClick(row: number, col: number): void {
         if (this.gameStatus() === 'running' && this.currentPlayer === 'human') {
             this.grid.update(grid => {
-                if (grid[row][col] === 'empty') {
-                    grid[row][col] = this.pawnChoices['human'];
-                    this.nextTurn()
-                }
+                grid[row][col] = this.pawnChoices['human'];
+                this.nextTurn()
+
                 return grid;
             }
             );
@@ -164,11 +168,14 @@ export class TicTacToe {
 
     registerGameResult(result: string, orientation?: string, index?: number): void {
         if (result === 'human-win') {
-            this.gameScore.update(score => ({ ...score, human: score.human + 1 }));
+            this.gameScore.update(score => ({ ...score, Human: score.Human + 1 }));
+            this.scoreChanged.set('Human');
         } else if (result === 'computer-win') {
-            this.gameScore.update(score => ({ ...score, computer: score.computer + 1 }));
+            this.gameScore.update(score => ({ ...score, Computer: score.Computer + 1 }));
+            this.scoreChanged.set('Computer');
         } else if (result === 'draw') {
-            this.gameScore.update(score => ({ ...score, draw: score.draw + 1 }));
+            this.gameScore.update(score => ({ ...score, Draws: score.Draws + 1 }));
+            this.scoreChanged.set('Draws');
         }
         this.gameStatus.set(result);
 
