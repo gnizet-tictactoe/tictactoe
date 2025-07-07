@@ -4,6 +4,7 @@
     border-radius: 20px;
     font-weight: 200;
     text-transform: uppercase;
+    font-family: "Lexend Exa", sans-serif;
     font-size: min(4vw, 4vh, 2rem);
     cursor: pointer;
     border-style: none;
