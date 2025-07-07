@@ -6,7 +6,7 @@
 
 
 :root {
-    --grid-size: 35rem;
+    --grid-size: min(80vw, 80vh);
     --bg-color: #e8e8e8;
     --accent-color: #343434;
     --accent-color-rgb: 52, 52, 52;
@@ -21,7 +21,7 @@
 
 .x-o {
     font-family: 'Lexend Exa', sans-serif;
-    font-size: calc(var(--grid-size) * 0.22);
+    font-size: min(18vw, 18vh, 6rem);
     text-transform: uppercase;
     font-weight: 800;
 }

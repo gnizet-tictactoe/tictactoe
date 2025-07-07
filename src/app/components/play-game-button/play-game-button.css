@@ -4,13 +4,13 @@
     border-radius: 20px;
     font-weight: 200;
     text-transform: uppercase;
-    font-size: 2rem;
+    font-size: min(4vw, 4vh, 2rem);
     cursor: pointer;
     border-style: none;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    margin-bottom: 3rem;
+    padding-top: min(2vw, 2vh, 1rem);
+    padding-bottom: min(2vw, 2vh, 1rem);
+    padding-left: min(4vw, 4vh, 2rem);
+    padding-right: min(4vw, 4vh, 2rem);
+    margin-bottom: min(6vw, 6vh, 3rem);
     transition: background-color 0.3s ease, color 0.3s ease;
 }

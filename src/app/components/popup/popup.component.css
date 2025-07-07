@@ -1,6 +1,6 @@
 .tictactoe {
     color: var(--accent-color);
-    font-size: 2rem;
+    font-size: min(5vw, 5vh, 2rem);
     font-weight: 600;
     transition: color 0.3s ease;
 }

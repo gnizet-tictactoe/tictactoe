@@ -1,6 +1,6 @@
 .pawn-selection {
     display: flex;
-    gap: 4rem;
+    gap: min(8vw, 8vh, 4rem);
     flex-direction: row;
 }
 
