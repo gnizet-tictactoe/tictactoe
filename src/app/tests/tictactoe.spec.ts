@@ -186,3 +186,53 @@ describe('Invalid inputs', () => {
         expect(game.grid()[0][0]).toBe('empty');
     });
 });
+
+describe('Score tracking', () => {
+    let game: TicTacToe;
+    beforeEach(() => {
+        game = new TicTacToe();
+        game.initGame();
+    }
+    );
+    it('should increment human score on human win', () => {
+        game.currentPlayer = 'human';
+        game.grid.set([
+            ['x', 'x', 'x'],
+            ['o', 'empty', 'o'],
+            ['empty', 'o', 'x']
+        ]);
+        game.checkForGameEnd();
+
+        // Checks that scores are correct
+        expect(game.gameScore().Human).toBe(1);
+        expect(game.gameScore().Computer).toBe(0);
+        expect(game.gameScore().Draws).toBe(0);
+    });
+
+    it('should increment computer score on computer win', () => {
+        game.currentPlayer = 'computer';
+        game.grid.set([
+            ['x', 'x', 'x'],
+            ['o', 'empty', 'o'],
+            ['empty', 'o', 'x']
+        ]);
+        game.checkForGameEnd();
+
+        expect(game.gameScore().Human).toBe(0);
+        expect(game.gameScore().Computer).toBe(1);
+        expect(game.gameScore().Draws).toBe(0);
+    });
+
+    it('should increment draws score on draw', () => {
+        game.grid.set([
+            ['o', 'x', 'o'],
+            ['o', 'x', 'o'],
+            ['x', 'o', 'x']
+        ]);
+        game.checkForGameEnd();
+
+        expect(game.gameScore().Human).toBe(0);
+        expect(game.gameScore().Computer).toBe(0);
+        expect(game.gameScore().Draws).toBe(1);
+    });
+});
