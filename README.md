@@ -1,6 +1,6 @@
 # Tic Tac Toe – Angular App
 
-Simple Tic Tac Toe game built with Angular.
+Simple Tic Tac Toe game built with Angular.  
 Play the game (without install): https://gnizet-tictactoe.github.io/tictactoe/
 
 ## Features
