@@ -72,7 +72,11 @@ export class TicTacToe {
 
     // Handle the human click on a cell
     handleCellClick(row: number, col: number): void {
-        if (this.gameStatus() === 'running' && this.currentPlayer === 'human') {
+        // Check bounds
+        if (row < 0 || row >= this.gameSize || col < 0 || col >= this.gameSize) {
+            return;
+        }
+        if (this.gameStatus() === 'running' && this.currentPlayer === 'human' && this.grid()[row][col] === 'empty') {
             this.grid.update(grid => {
                 // Make a copy of the grid so that signals associated to grid update correctly
                 const newGrid = grid.map(r => [...r]);

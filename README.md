@@ -11,6 +11,7 @@ Simple Tic Tac Toe game built with Angular.
 - Game result display
 - Score tracking
 - Light/dark theme
+- Basic test suite
 
 ## Requirements
 
@@ -48,7 +49,7 @@ src/
     components/        # Reusable UI components (Grid, cells, buttons, etc.)
     interface/         # Type interfaces
     logic/             # Game logic + theme
-    tests/             # Tests (currently implemented: game logic)
+    tests/             
     app.ts             # Root component
   index.html
   main.ts

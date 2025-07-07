@@ -25,8 +25,6 @@ export class CellComponent {
     }
 
     onClick() {
-        if (this.emptyCell) {
-            this.ticTacToe.handleCellClick(this.row(), this.col());
-        }
+        this.ticTacToe.handleCellClick(this.row(), this.col());
     }
 }
