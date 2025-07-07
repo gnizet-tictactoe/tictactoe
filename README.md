@@ -4,10 +4,13 @@ Simple Tic Tac Toe game built with Angular.
 
 ## Features
 
-- 3x3 game grid (grid size editable in `src/app/logic/tictactoe.ts`)
-- Player vs Computer logic
+- Animated Tic Tac Toe game
+- 3x3 game grid (grid size editable in `/src/app/logic/tictactoe.ts`)
+- Player vs Computer
 - Computer plays at random
 - Game result display
+- Score tracking
+- Light/dark theme
 
 ## Requirements
 
@@ -17,8 +20,6 @@ Make sure you have the following installed:
 - [Angular CLI](https://angular.io/cli)
 
 ## Installation
-
-If you are running on Windows, make sure to use cmd or bash - not PowerShell
 
 ```bash
 # Clone the repository
@@ -46,9 +47,16 @@ src/
   app/
     components/        # Reusable UI components (Grid, cells, buttons, etc.)
     interface/         # Type interfaces
-    logic/             # Game logic
+    logic/             # Game logic + theme
+    tests/             # Tests (currently implemented: game logic)
     app.ts             # Root component
   index.html
   main.ts
   styles.css           # Global styles
 ```
+
+## Tests
+
+All the tests are written inside `/src/app/tests/`
+
+To execute the tests, run `npx jest`

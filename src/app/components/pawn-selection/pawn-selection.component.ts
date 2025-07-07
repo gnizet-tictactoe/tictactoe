@@ -9,8 +9,8 @@ import { PawnType } from "../../interface/pawnType";
 })
 export class PawnSelectionComponent {
     ticTacToe = inject(TicTacToe);
-
     pawnChoices = this.ticTacToe.pawnChoices;
+
     onPawnTypeClicked(pawn: string) {
         this.ticTacToe.selectPawnType(pawn as PawnType);
     }

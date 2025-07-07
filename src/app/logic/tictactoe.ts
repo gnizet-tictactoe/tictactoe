@@ -2,6 +2,7 @@ import { computed, Injectable, signal } from "@angular/core";
 import { CellValue } from "../interface/cellValue";
 import { PlayerType } from "../interface/playerType";
 import { PawnType } from "../interface/pawnType";
+import { GameStatus } from "../interface/gameStatus";
 
 @Injectable({
     providedIn: 'root',
@@ -9,12 +10,14 @@ import { PawnType } from "../interface/pawnType";
 export class TicTacToe {
 
     // === GAME SETTINGS ===
+
     gameSize = 3;
     pawnChoices = { 'human': 'x' as PawnType, 'computer': 'o' as PawnType };
 
 
     // === GAME STATE ===
-    gameStatus = signal<string>('');
+
+    gameStatus = signal<GameStatus>('not-started');
     gameScore = signal<{ Human: number, Draws: number, Computer: number }>({ Human: 0, Draws: 0, Computer: 0 });
 
     // Details about the victory of the game are used to highlight the winning cells
@@ -39,10 +42,11 @@ export class TicTacToe {
         return count;
     });
 
-    showPopup = signal<boolean>(true);
-
     // This signal is used for triggering animations in the score component
     scoreChanged = signal<string | null>(null);
+
+
+    // === INIT FUNCTIONS ===
 
     initGrid() {
         // Initialize the grid with 'empty' values for each cell
@@ -53,22 +57,20 @@ export class TicTacToe {
     }
 
     initGame() {
-
         // Reset game state
         this.initGrid();
         this.gameVictoryDetails.set({ orientation: '', index: -1 }); // Reset game victory details
         this.currentPlayer = this.getStartingPlayer();
         this.gameStatus.set('running');
-        this.showPopup.set(false);
 
+        // Launch game by launching the first turn
         this.nextTurn();
     }
 
-    getStartingPlayer(): PlayerType {
-        // Determine the starting player based on the pawn choices : x starts first
-        return this.pawnChoices['human'] === 'x' ? 'human' : 'computer';
-    }
 
+    // === GAME LOGIC FUNCTIONS ===
+
+    // Handle the human click on a cell
     handleCellClick(row: number, col: number): void {
         if (this.gameStatus() === 'running' && this.currentPlayer === 'human') {
             this.grid.update(grid => {
@@ -82,7 +84,7 @@ export class TicTacToe {
         }
     }
 
-
+    // Computer behavior: perform a random (but valid) move
     performComputerMove(): void {
 
         // Track the empty cells
@@ -113,6 +115,7 @@ export class TicTacToe {
 
     nextTurn(): void {
         if (this.currentPlayer === 'human') {
+            // Still waiting for the human player to click on a cell
             return;
         }
 
@@ -124,9 +127,9 @@ export class TicTacToe {
         }
     }
 
-    setNextPlayer(): void {
-        // Switch to the next player
-        this.currentPlayer = this.currentPlayer === 'human' ? 'computer' : 'human';
+    getStartingPlayer(): PlayerType {
+        // Determine the starting player based on the pawn choices : x starts first
+        return this.pawnChoices['human'] === 'x' ? 'human' : 'computer';
     }
 
     checkForGameEnd(): void {
@@ -181,7 +184,23 @@ export class TicTacToe {
         this.nextTurn();
     }
 
-    registerGameResult(result: string, orientation?: string, index?: number): void {
+
+    // === UTILS FUNCTIONS ===
+
+    selectPawnType(pawnType: PawnType): void {
+        console.log(`Pawn type selected: ${pawnType}`);
+        if (this.gameStatus() !== 'running') {
+            this.pawnChoices['human'] = pawnType;
+            this.pawnChoices['computer'] = pawnType === 'x' ? 'o' : 'x';
+        }
+    }
+
+    setNextPlayer(): void {
+        // Switch to the next player
+        this.currentPlayer = this.currentPlayer === 'human' ? 'computer' : 'human';
+    }
+
+    registerGameResult(result: GameStatus, orientation?: string, index?: number): void {
         if (result === 'human-win') {
             this.gameScore.update(score => ({ ...score, Human: score.Human + 1 }));
             this.scoreChanged.set('Human');
@@ -198,17 +217,6 @@ export class TicTacToe {
             this.gameVictoryDetails.set({ orientation, index });
         } else {
             this.gameVictoryDetails.set({ orientation: '', index: -1 });
-        }
-
-        // Show the popup with the game result
-        this.showPopup.set(true);
-    }
-
-    selectPawnType(pawnType: PawnType): void {
-        console.log(`Pawn type selected: ${pawnType}`);
-        if (this.gameStatus() !== 'running') {
-            this.pawnChoices['human'] = pawnType;
-            this.pawnChoices['computer'] = pawnType === 'x' ? 'o' : 'x';
         }
     }
 }

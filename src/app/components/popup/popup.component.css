@@ -1,0 +1,32 @@
+.tictactoe {
+    color: var(--accent-color);
+    font-size: 2rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.popup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+    background-color: var(--bg-color);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 40px rgba(var(--accent-color-rgb), 0.2);
+    z-index: 101;
+    animation: popupIn 0.4s ease forwards;
+    animation-delay: 1.2s;
+    transition: background-color 0.3s ease;
+}
+
+@keyframes popupIn {
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}

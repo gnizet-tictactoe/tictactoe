@@ -1,0 +1,1 @@
+export type GameStatus = 'not-started' | 'running' | 'human-win' | 'computer-win' | 'draw';

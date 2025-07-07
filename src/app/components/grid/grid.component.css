@@ -30,11 +30,11 @@
 
 @keyframes grow-vertical {
     from {
-        transform: scaleY(0), translateX(-50%);
+        transform: scaleY(0) translateX(-50%);
     }
 
     to {
-        transform: scaleY(1), translateX(-50%);
+        transform: scaleY(1) translateX(-50%);
     }
 }
 
@@ -49,11 +49,11 @@
 
 @keyframes grow-horizontal {
     from {
-        transform: scaleX(0), translateY(-50%);
+        transform: scaleX(0) translateY(-50%);
     }
 
     to {
-        transform: scaleX(1), translateY(-50%);
+        transform: scaleX(1) translateY(-50%);
     }
 }
 

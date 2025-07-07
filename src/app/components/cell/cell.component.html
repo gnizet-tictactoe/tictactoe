@@ -1,4 +1,7 @@
-<div class="cell" (click)="onClick()">@if (!emptyCell) {<div class="cell-content x-o" [class.x]="value() === 'x'"
-        [class.o]="value() === 'o'">{{ value()
-        }}</div>}
+<div class="cell" (click)="onClick()">
+        @if (!emptyCell) {
+        <div class="cell-content x-o" [class.x]="value() === 'x'" [class.o]="value() === 'o'">
+                {{ value() }}
+        </div>
+        }
 </div>

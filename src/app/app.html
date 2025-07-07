@@ -1,15 +1,5 @@
-<div class="main-page" [class.popup-open]="showPopup()">
+<div class="main-page">
     <theme-toggle-switch class="theme-toggle-switch"></theme-toggle-switch>
     <grid></grid>
 </div>
-
-
-@if (showPopup()) {
-<div class="popup">
-    <div class="tictactoe">Tic Tac Toe</div>
-    <game-result></game-result>
-    <pawn-selection></pawn-selection>
-    <play-game-button></play-game-button>
-    <score></score>
-</div>
-}
+<popup></popup>
